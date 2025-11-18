@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CHW Decision Assistant</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>CHW Decision Assistant</h1>
+    <p>Offline-first health triage assistant for Community Health Workers</p>
+  </header>
+
+  <main>
+    <form id="triageForm">
+      <h2>Patient Symptoms</h2>
+
+      <label>Age (months):</label>
+      <input type="number" id="age_months" required />
+
+      <label>Sex:</label>
+      <select id="sex">
+        <option value="M">Male</option>
+        <option value="F">Female</option>
+      </select>
+
+      <h3>Symptoms</h3>
+      <label><input type="checkbox" id="fever" /> Fever</label>
+      <label><input type="checkbox" id="cough" /> Cough</label>
+      <label><input type="checkbox" id="difficulty_breathing" /> Difficulty Breathing</label>
+
+      <h3>Vitals</h3>
+      <label>Temperature (°C):</label>
+      <input type="number" step="0.1" id="temp_c" />
+
+      <button type="submit">Assess</button>
+    </form>
+
+    <div id="result" class="hidden">
+      <h2>Assessment Result</h2>
+      <p><strong>Risk Score:</strong> <span id="riskScore"></span></p>
+      <p><strong>Recommendation:</strong> <span id="recommendation"></span></p>
+      <button id="printNote">Print Referral Note</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 CHW Decision Assistant | Built for Kenya's CHWs</p>
+  </footer>
+
+  <script src="db.js"></script>
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

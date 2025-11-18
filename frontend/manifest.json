@@ -1,0 +1,15 @@
+{
+  "short_name": "CHW Assist",
+  "name": "Community Health Worker Decision Assistant",
+  "icons": [
+    {
+      "src": "assets/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#00695c"
+}
