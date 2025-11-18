@@ -11,16 +11,17 @@ auth_bp = Blueprint('auth', __name__)
 def register():
     data = request.get_json() or {}
     username = data.get('username')
+    email = data.get('email')  # Added email
     password = data.get('password')
     role = data.get('role', 'chw')
 
-    if not username or not password:
-        return jsonify({"msg": "username and password required"}), 400
+    if not username or not password or not email:
+        return jsonify({"msg": "username, email, and password required"}), 400
 
-    if User.query.filter_by(username=username).first():
-        return jsonify({"msg": "username exists"}), 409
+    if User.query.filter((User.username == username) | (User.email == email)).first():
+        return jsonify({"msg": "username or email exists"}), 409
 
-    user = User(username=username, role=role)
+    user = User(username=username, email=email, role=role)
     user.set_password(password)
     db.session.add(user)
     db.session.commit()
@@ -29,12 +30,12 @@ def register():
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json() or {}
-    username = data.get('username')
+    email = data.get('email')  # login by email
     password = data.get('password')
 
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter_by(email=email).first()
     if not user or not user.check_password(password):
-        return jsonify({"msg": "bad username or password"}), 401
+        return jsonify({"msg": "bad email or password"}), 401
 
     access_token = create_access_token(identity={"id": user.id, "role": user.role}, expires_delta=timedelta(days=7))
-    return jsonify({"access_token": access_token, "user": {"id": user.id, "username": user.username, "role": user.role}})
+    return jsonify({"access_token": access_token, "user": {"id": user.id, "username": user.username, "email": user.email, "role": user.role}})
