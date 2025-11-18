@@ -1,5 +1,5 @@
 // frontend/api.js
-const API_URL = "https://chw-backend.onrender.com/api/v1"; // Change when deploying
+const API_URL = "http://127.0.0.1:5000/predict";
 
 async function submitCase(payload) {
   try {
